@@ -1,4 +1,4 @@
-export const DOMAIN = 'https://react-memory-mern.herokuapp.com'
+export const DOMAIN = 'https://nodejs-memory-mern.herokuapp.com'
 
 export const LIMIT = 10
 
