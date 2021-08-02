@@ -5,8 +5,8 @@ const Routes = () => {
   return (
     <BrowserRouter>
       <Switch>
+        <Route path='/auth' component={Page.AuthPage} />
         <Route path='/' component={Page.HomePage} />
-        <Route />
       </Switch>
     </BrowserRouter>
   )

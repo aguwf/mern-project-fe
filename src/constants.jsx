@@ -1,8 +1,11 @@
-export const DOMAIN = 'https://nodejs-memory-mern.herokuapp.com'
+export const DOMAIN = 'http://localhost:3010'
 
 export const LIMIT = 10
 
 export const HTTP_HEADER_JSON = { 'Content-Type': 'application/json' }
+
+export const AUTH = 'AUTH'
+export const LOGOUT = 'LOGOUT'
 
 export const HTTP_READ = 'GET'
 export const HTTP_POST = 'POST'
@@ -36,3 +39,11 @@ export const RESTORE_POST_FAILURE = 'RESTORE_POST_FAILURE'
 export const LIKE_POST_REQUEST = 'LIKE_POST_REQUEST'
 export const LIKE_POST_SUCCESS = 'LIKE_POST_SUCCESS'
 export const LIKE_POST_FAILURE = 'LIKE_POST_FAILURE'
+
+export const SIGNUP_REQUEST = 'SIGNUP_REQUEST'
+export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS'
+export const SIGNUP_FAILURE = 'SIGNUP_FAILURE'
+
+export const SIGNIN_REQUEST = 'SIGNIN_REQUEST'
+export const SIGNIN_SUCCESS = 'SIGNIN_SUCCESS'
+export const SIGNIN_FAILURE = 'SIGNIN_FAILURE'

@@ -5,6 +5,7 @@ import Form from '../components/Forms/FormComponent'
 import NavBar from '../components/common/NavBarComponent'
 import { Container, Grow, Grid } from '@material-ui/core'
 import * as actions from '../actions/PostAction'
+import { logout } from '../actions/AuthAction'
 import useStyles from '../assets/styles/MuiStyles/PostContainStyle'
 
 export const PostContainer = (props) => {
@@ -26,6 +27,7 @@ export const PostContainer = (props) => {
         getDeletedPostRequest={props.getDeletedPostRequest}
         listDeletedPost={props.listDeletedPost}
         restorePostRequest={(data) => props.restorePostRequest(data)}
+        logout={() => props.logout()}
       />
       <Grow in className={classes.actionDiv}>
         <Container>
@@ -82,7 +84,8 @@ const mapDispatchToProps = (dispatch) => {
     updatePostRequest: (data) => dispatch(actions.updatePostRequest(data)),
     deletePostRequest: (data) => dispatch(actions.deletePostRequest(data)),
     restorePostRequest: (data) => dispatch(actions.restorePostRequest(data)),
-    likePostRequest: (data) => dispatch(actions.likePostRequest(data))
+    likePostRequest: (data) => dispatch(actions.likePostRequest(data)),
+    logout: () => dispatch(logout())
   }
 }
 

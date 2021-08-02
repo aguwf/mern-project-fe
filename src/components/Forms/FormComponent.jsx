@@ -4,8 +4,8 @@ import useStyles from '../../assets/styles/MuiStyles/FormCompoStyle'
 
 function FormComponent(props) {
   const classes = useStyles()
+  const User = JSON.parse(localStorage.getItem('profile'))
   const [PostData, setPostData] = useState({
-    creator: '',
     title: '',
     message: '',
     tags: '',
@@ -29,15 +29,16 @@ function FormComponent(props) {
   }, [PostData.id, props.PostUpdate])
 
   const handleSubmit = () => {
-    if (
-      PostData.creator &&
-      PostData.message &&
-      PostData.title &&
-      PostData.tags
-    ) {
+    if (PostData.message && PostData.title && PostData.tags) {
       PostData.id
-        ? props.updatePostRequest({ PostData, textSearch: props.textSearch })
-        : props.addPostRequest({ PostData, textSearch: props.textSearch })
+        ? props.updatePostRequest({
+            PostData: { ...PostData, name: User?.result?.name },
+            textSearch: props.textSearch
+          })
+        : props.addPostRequest({
+            PostData: { ...PostData, name: User?.result?.name },
+            textSearch: props.textSearch
+          })
     }
     handleClear()
     props.clearPost()
@@ -45,7 +46,6 @@ function FormComponent(props) {
   const handleClear = () => {
     setPostData({
       id: '',
-      creator: '',
       title: '',
       message: '',
       tags: '',
@@ -79,6 +79,17 @@ function FormComponent(props) {
       }
     }
   }
+
+  if (!User?.result?.name) {
+    return (
+      <Paper>
+        <Typography variant='h6' align='center'>
+          Please sign in to create your memories and like other's memories
+        </Typography>
+      </Paper>
+    )
+  }
+
   return (
     <Paper className={classes.paper}>
       <form
@@ -90,18 +101,10 @@ function FormComponent(props) {
         <Typography variant={'h5'}>Creating memory</Typography>
         <TextField
           className={classes.marginTopBottom}
-          name={'creator'}
-          variant={'outlined'}
-          label={'Creator'}
-          fullWidth
-          value={PostData.creator}
-          onChange={handleChangeInput}
-        />
-        <TextField
-          className={classes.marginTopBottom}
           name={'title'}
           variant={'outlined'}
           label={'Title'}
+          required
           fullWidth
           value={PostData.title}
           onChange={handleChangeInput}
@@ -110,6 +113,7 @@ function FormComponent(props) {
           className={classes.marginTopBottom}
           name={'message'}
           variant={'outlined'}
+          required
           label={'Message'}
           fullWidth
           value={PostData.message}
@@ -119,6 +123,7 @@ function FormComponent(props) {
           className={classes.marginTopBottom}
           name={'tags'}
           variant={'outlined'}
+          required
           label={'Tags'}
           fullWidth
           value={PostData.tags}

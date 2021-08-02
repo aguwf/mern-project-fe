@@ -1,14 +1,42 @@
 import React from 'react'
-import { AppBar, Typography, IconButton, Popover, Box } from '@material-ui/core'
+import {
+  AppBar,
+  Typography,
+  IconButton,
+  Popover,
+  Box,
+  InputBase,
+  Button,
+  Toolbar,
+  Avatar
+} from '@material-ui/core'
 import useStyles from '../../assets/styles/MuiStyles/NavBarConpoStyle'
 import RestoreFromTrashIcon from '@material-ui/icons/RestoreFromTrash'
 import RestoreIcon from '@material-ui/icons/Restore'
+import SearchIcon from '@material-ui/icons/Search'
+import { Link, useHistory, useLocation } from 'react-router-dom'
+import decode from 'jwt-decode'
 
 function NavBarComponent(props) {
   let renderDelPost = []
   const classes = useStyles()
+  const history = useHistory()
+  const location = useLocation()
   const [HideTrash, setHideTrash] = React.useState(true)
   const [anchorEl, setAnchorEl] = React.useState(null)
+  const [User, setUser] = React.useState(null)
+
+  React.useEffect(() => {
+    const token = User?.token
+    if (token) {
+      const decodedToken = decode(token)
+
+      if (decodedToken.exp * 1000 < new Date().getTime()) {
+        handleLogout()
+      }
+    }
+    setUser(JSON.parse(localStorage.getItem('profile')))
+  }, [location])
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
@@ -26,30 +54,26 @@ function NavBarComponent(props) {
     setAnchorEl(null)
   }
 
+  const handleLogout = () => {
+    props.logout()
+    history.push('/')
+    setUser(null)
+  }
+
   const open = Boolean(anchorEl)
 
   if (props.listDeletedPost) {
     renderDelPost = props.listDeletedPost.map((delPost, index) => {
       return (
-        <Box
-          className={classes.itemPopover}
-          key={index}
-          style={{
-            display: 'flex',
-            backgroundColor: 'gray',
-            padding: '10px 0',
-            width: '90%',
-            justifyContent: 'space-around',
-            margin: '0 auto',
-            borderRadius: '12px',
-            alignItems: 'center'
-          }}
-        >
+        <Box className={classes.itemPopover} key={index}>
           <Box>{index + 1}</Box>
           <Box>{delPost.title}</Box>
-          <Box>{delPost.creator}</Box>
+          <Box>{delPost.name}</Box>
           <Box>
-            <IconButton onClick={() => handleRestorePost(delPost.id)}>
+            <IconButton
+              onClick={() => handleRestorePost(delPost.id)}
+              className={classes.restoreBtn}
+            >
               <RestoreIcon />
             </IconButton>
           </Box>
@@ -60,25 +84,93 @@ function NavBarComponent(props) {
   return (
     <div style={{ display: 'flex', alignItems: 'center' }}>
       <AppBar className={classes.appBar} position='static' color='inherit'>
-        <Typography className={classes.heading} varian='h2' align='center'>
-          Memories
-        </Typography>
+        <div className={classes.search}>
+          <div className={classes.searchIcon}>
+            <SearchIcon />
+          </div>
+          <InputBase
+            placeholder='Search…'
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput
+            }}
+            inputProps={{ 'aria-label': 'search' }}
+          />
+        </div>
+        <Box
+          component={Link}
+          to={'/'}
+          style={{
+            border: '1px solid #c3c3c3',
+            borderRadius: 10,
+            height: '2.5rem',
+            width: '6rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            textDecoration: 'none'
+          }}
+        >
+          <Typography className={classes.heading} varian='h2' align='center'>
+            Memories
+          </Typography>
+        </Box>
+        <Toolbar className={classes.toolbar}>
+          {User ? (
+            <div className={classes.profile}>
+              <Avatar
+                className={classes.purple}
+                alt={User.result.name}
+                src={User.result.imageUrl}
+              >
+                {User.result.name.charAt(0)}
+              </Avatar>
+              <Typography className={classes.UserName} variant='h6'>
+                {User.result.name}
+              </Typography>
+              <Button
+                size='small'
+                variant='contained'
+                className={classes.logout}
+                color='secondary'
+                onClick={handleLogout}
+              >
+                Log Out
+              </Button>
+            </div>
+          ) : (
+            <Box className={classes.tool}>
+              <Button
+                size='medium'
+                color='secondary'
+                variant='contained'
+                className={`${classes.borderRadius}`}
+                component={Link}
+                to={'/auth'}
+              >
+                Sign Up
+              </Button>
+              {/* <Button
+                size='small'
+                color='default'
+                variant='outlined'
+                className={`${classes.borderRadius} ${classes.marginLeft} ${classes.loginBtn}`}
+              >
+                Log In
+              </Button> */}
+            </Box>
+          )}
+          {User?.result?.name && (
+            <Box className={`${classes.trash} ${classes.marginLeft}`}>
+              <IconButton onClick={handleClick} color='secondary'>
+                <RestoreFromTrashIcon />
+              </IconButton>
+            </Box>
+          )}
+        </Toolbar>
       </AppBar>
-      <IconButton
-        style={{
-          backgroundColor: 'white',
-          padding: 20,
-          borderRadius: 15,
-          boxShadow: '2px 2px 5px #a2a2a2',
-          marginLeft: '1rem'
-        }}
-        onClick={handleClick}
-      >
-        <RestoreFromTrashIcon />
-      </IconButton>
       <Popover
         className={classes.popover}
-        // id={id}
         open={open}
         anchorEl={anchorEl}
         onClose={handleClose}

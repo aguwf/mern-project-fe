@@ -84,7 +84,7 @@ function* handleDeletePost(action) {
     yield put(actions.deletePostSuccess({ response }))
     yield put(actions.getPostRequest({ pageIndex: 1 }))
   } catch (error) {
-    yield put(actions.updatePostFailure(error))
+    yield put(actions.deletePostFailure(error))
   }
 }
 function* handleRestorePost(action) {
