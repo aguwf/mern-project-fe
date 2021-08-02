@@ -1,4 +1,5 @@
-export const DOMAIN = 'http://localhost:3010'
+// export const DOMAIN = 'http://localhost:3010'
+export const DOMAIN = 'https://nodejs-memory-mern.herokuapp.com/'
 
 export const LIMIT = 10
 
