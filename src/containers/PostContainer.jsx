@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import Post from '../components/Post/PostComponent'
 import Form from '../components/Forms/FormComponent'
 import NavBar from '../components/common/NavBarComponent'
-import { Container, Grow, Grid } from '@material-ui/core'
+import Pagination from '../components/common/PaginationComponent'
+import { Container, Grow, Grid, Paper } from '@material-ui/core'
 import * as actions from '../actions/PostAction'
 import { logout } from '../actions/AuthAction'
 import useStyles from '../assets/styles/MuiStyles/PostContainStyle'
@@ -22,7 +23,7 @@ export const PostContainer = (props) => {
     !props.listPost && props.getPostRequest({ pageIndex: 1 })
   }, [props])
   return (
-    <Container maxWidth='lg' className={classes.mainContainer}>
+    <Container maxWidth={false} className={classes.mainContainer}>
       <NavBar
         getDeletedPostRequest={props.getDeletedPostRequest}
         listDeletedPost={props.listDeletedPost}
@@ -30,7 +31,7 @@ export const PostContainer = (props) => {
         logout={() => props.logout()}
       />
       <Grow in className={classes.actionDiv}>
-        <Container>
+        <Container maxWidth={false}>
           <Grid
             container
             justifyContent='space-between'
@@ -49,14 +50,27 @@ export const PostContainer = (props) => {
                 clearPost={clearPost}
               />
             </Grid>
-            <Grid item xs={12} sm={4}>
-              <Form
-                addPostRequest={(data) => props.addPostRequest(data)}
-                updatePostRequest={(data) => props.updatePostRequest(data)}
-                PostUpdate={PostData}
-                clearPost={clearPost}
-                textSearch={props.textSearch}
-              />
+            <Grid className={`${classes.formRoot} ${classes.sticky}`}>
+              <Grid
+                item
+                xs={12}
+                sm={4}
+                className={`${classes.form} ${classes.marginTop} ${classes.sticky}`}
+              >
+                <Form
+                  addPostRequest={(data) => props.addPostRequest(data)}
+                  updatePostRequest={(data) => props.updatePostRequest(data)}
+                  PostUpdate={PostData}
+                  clearPost={clearPost}
+                  textSearch={props.textSearch}
+                />
+                <Paper
+                  className={`${classes.pagination} ${classes.marginTop}`}
+                  elevation={6}
+                >
+                  <Pagination />
+                </Paper>
+              </Grid>
             </Grid>
           </Grid>
         </Container>

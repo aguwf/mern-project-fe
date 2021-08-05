@@ -34,7 +34,10 @@ export default makeStyles((theme) => ({
   },
   heading: {
     color: 'rgba(0, 183, 255, 1)',
-    textDecoration: 'none'
+    textDecoration: 'none',
+    fontSize: 30,
+    fontWeight: 700,
+    paddingLeft: '3rem'
   },
   image: {
     marginLeft: '15px'
@@ -59,10 +62,11 @@ export default makeStyles((theme) => ({
     border: '1px solid #c3c3c3',
     borderRadius: 10,
     padding: theme.spacing(1, 1, 1, 0),
+    height: '2rem',
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create('width'),
-    width: '100%',
+    width: '50ch !important',
     [theme.breakpoints.up('md')]: {
       width: '20ch'
     }

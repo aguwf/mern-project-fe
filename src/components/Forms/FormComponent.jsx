@@ -32,11 +32,31 @@ function FormComponent(props) {
     if (PostData.message && PostData.title && PostData.tags) {
       PostData.id
         ? props.updatePostRequest({
-            PostData: { ...PostData, name: User?.result?.name },
+            PostData: {
+              ...PostData,
+              name: User?.result?.name,
+              tags: PostData.tags.split(',').map((tag) => {
+                if (tag.substr(0, 1) === ' ') {
+                  return tag.slice(1, tag.length).replace(/['+ ']/g, '_')
+                } else {
+                  return tag.replace(/['+ ']/g, '_')
+                }
+              })
+            },
             textSearch: props.textSearch
           })
         : props.addPostRequest({
-            PostData: { ...PostData, name: User?.result?.name },
+            PostData: {
+              ...PostData,
+              name: User?.result?.name,
+              tags: PostData.tags.split(',').map((tag) => {
+                if (tag.substr(0, 1) === ' ') {
+                  return tag.slice(1, tag.length).replace(/['+ ']/g, '_')
+                } else {
+                  return tag.replace(/['+ ']/g, '_')
+                }
+              })
+            },
             textSearch: props.textSearch
           })
     }
@@ -59,9 +79,9 @@ function FormComponent(props) {
     setPostData({ ...PostData, selectedFile: '' })
   }
   const handleChangeInput = (event) => {
-    const { name, value } = event.target
+    let { name, value } = event.target
     if (name === 'tags') {
-      setPostData({ ...PostData, [name]: value.split(',') })
+      setPostData({ ...PostData, [name]: value })
     } else {
       setPostData({ ...PostData, [name]: value })
     }
@@ -82,13 +102,23 @@ function FormComponent(props) {
 
   if (!User?.result?.name) {
     return (
-      <Paper>
+      <Paper className={classes.paper}>
         <Typography variant='h6' align='center'>
           Please sign in to create your memories and like other's memories
         </Typography>
       </Paper>
     )
   }
+
+  // console.log(
+  //   PostData.tags.split(',').map((tag) => {
+  //     if (tag.substr(0, 1) === ' ') {
+  //       return tag.slice(1, tag.length).replace(/['+ ']/g, '_')
+  //     } else {
+  //       return tag.replace(/['+ ']/g, '_')
+  //     }
+  //   })
+  // )
 
   return (
     <Paper className={classes.paper}>

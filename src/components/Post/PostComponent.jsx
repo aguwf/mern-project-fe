@@ -76,7 +76,11 @@ function PostComponent(props) {
       const Likes = () => {
         if (post.likes.length > 0) {
           return post.likes.find(
-            (like) => like === (User?.result?.googleId || User?.result?._id)
+            (like) =>
+              like ===
+              (User?.result?.googleId ||
+                User?.result?._id ||
+                User?.result?.facebookId)
           ) ? (
             <>
               <FavoriteIcon fontSize='small' />
@@ -122,8 +126,8 @@ function PostComponent(props) {
             }
           />
           <div className={classes.overlay}>
-            <div style={{ width: '21rem' }}>
-              <Typography variant={'h4'} style={{ width: '80%' }}>
+            <div style={{ width: '16rem' }}>
+              <Typography variant={'h5'} style={{ width: '80%' }}>
                 {post.title}
               </Typography>
             </div>
@@ -132,15 +136,28 @@ function PostComponent(props) {
             </Typography>
           </div>
           <CardMedia className={classes.media} image={post.selectedFile} />
-          <CardContent>
-            <Typography
-              className={classes.details}
-              variant='body2'
-              color='textSecondary'
-              component='p'
-            >
-              Tags : {post.tags.map((tag) => ' #' + tag)}
-            </Typography>
+          <Typography
+            className={classes.details}
+            variant='body2'
+            color='textSecondary'
+            component='p'
+          >
+            Tags :
+            {post.tags.map((tag, index) => (
+              <span
+                key={index}
+                style={{
+                  cursor: 'pointer'
+                }}
+                onClick={() => {
+                  console.log(tag)
+                }}
+              >
+                #{tag}
+              </span>
+            ))}
+          </Typography>
+          <CardContent className={classes.content}>
             <Typography
               className={classes.title}
               variant='body2'
@@ -169,7 +186,6 @@ function PostComponent(props) {
               >
                 <Likes />
               </Button>
-              {post.likeCount}
             </div>
             <IconButton aria-label='share' onClick={handleClick}>
               <ShareIcon />
@@ -202,8 +218,7 @@ function PostComponent(props) {
             <Box
               p={2}
               style={{
-                width: '10rem',
-                height: '10rem',
+                width: '12rem',
                 backgroundColor: 'white',
                 borderRadius: 15,
                 boxShadow: '2px 2px 5px #a2a2a2'
@@ -236,7 +251,7 @@ function PostComponent(props) {
                     paddingBottom: '20px'
                   }}
                   url={'https://meosieubeo.netlify.app/'}
-                  quote={'Share to facebook'}
+                  appId='1019021612204810'
                   className='Demo__some-network__share-button'
                 >
                   <FacebookMessengerIcon
@@ -294,7 +309,6 @@ function PostComponent(props) {
 
   return (
     <div>
-      <h1>Posts</h1>
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>{renderPost}</div>
     </div>
   )

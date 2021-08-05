@@ -2,21 +2,33 @@ import { makeStyles } from '@material-ui/core/styles'
 
 export default makeStyles((theme) => ({
   mainContainer: {
-    maxWidth: '1500px',
     position: 'relative'
   },
   smMargin: {
     margin: theme.spacing(1)
   },
-  actionDiv: {
-    maxWidth: '1500px'
-  },
+  actionDiv: {},
   maxWidth: {
-    maxWidth: '66.333333%',
-    flexBasis: '66.333333%'
+    maxWidth: '79.333333%',
+    flexBasis: '100%'
   },
   sticky: {
     position: 'sticky',
     top: '5%'
+  },
+  marginTop: {
+    marginTop: '2rem'
+  },
+  searchRoot: {
+    maxWidth: '90%'
+  },
+  formRoot: {
+    width: '19.666666%'
+  },
+  form: {
+    maxWidth: '100%'
+  },
+  pagination: {
+    borderRadius: 12
   }
 }))

@@ -5,10 +5,10 @@ import {
   IconButton,
   Popover,
   Box,
-  InputBase,
   Button,
   Toolbar,
-  Avatar
+  Avatar,
+  InputBase
 } from '@material-ui/core'
 import useStyles from '../../assets/styles/MuiStyles/NavBarConpoStyle'
 import RestoreFromTrashIcon from '@material-ui/icons/RestoreFromTrash'
@@ -36,6 +36,7 @@ function NavBarComponent(props) {
       }
     }
     setUser(JSON.parse(localStorage.getItem('profile')))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location])
 
   const handleClick = (event) => {
@@ -84,37 +85,29 @@ function NavBarComponent(props) {
   return (
     <div style={{ display: 'flex', alignItems: 'center' }}>
       <AppBar className={classes.appBar} position='static' color='inherit'>
+        <Box>
+          <Typography
+            component={Link}
+            to={'/'}
+            className={classes.heading}
+            align='center'
+          >
+            Memories
+          </Typography>
+        </Box>
         <div className={classes.search}>
           <div className={classes.searchIcon}>
             <SearchIcon />
           </div>
           <InputBase
             placeholder='Search…'
+            inputProps={{ 'aria-label': 'search' }}
             classes={{
               root: classes.inputRoot,
               input: classes.inputInput
             }}
-            inputProps={{ 'aria-label': 'search' }}
           />
         </div>
-        <Box
-          component={Link}
-          to={'/'}
-          style={{
-            border: '1px solid #c3c3c3',
-            borderRadius: 10,
-            height: '2.5rem',
-            width: '6rem',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            textDecoration: 'none'
-          }}
-        >
-          <Typography className={classes.heading} varian='h2' align='center'>
-            Memories
-          </Typography>
-        </Box>
         <Toolbar className={classes.toolbar}>
           {User ? (
             <div className={classes.profile}>

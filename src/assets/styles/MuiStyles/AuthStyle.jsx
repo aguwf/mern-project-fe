@@ -27,7 +27,11 @@ export default makeStyles((theme) => ({
     flexDirection: 'column'
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
+    margin: theme.spacing(3, 0, 2),
+    backgroundColor: '#628395',
+    '&:hover': {
+      backgroundColor: '#628395'
+    }
     // width: '50%',
     // transform: 'translateX(50%)'
   },
