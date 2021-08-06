@@ -20,6 +20,8 @@ const PostReducer = (state = INIT_STATE, action) => {
     case constants.DELETE_POST_REQUEST:
     case constants.RESTORE_POST_REQUEST:
     case constants.LIKE_POST_REQUEST:
+    case constants.GET_SINGLE_POST_REQUEST:
+    case constants.SEARCH_POST_REQUEST:
       return {
         ...state,
         isFetching: true
@@ -42,6 +44,15 @@ const PostReducer = (state = INIT_STATE, action) => {
         textSearch: '',
         isFetching: false
       }
+    case constants.SEARCH_POST_SUCCESS:
+      return {
+        ...state,
+        listPost: action.payload.response.listPost,
+        pageIndex: action.payload.pageIndex,
+        totalPage: action.payload.response.totalPage,
+        textSearch: action.payload.textSearch,
+        isFetching: false
+      }
     case constants.GET_DELETED_POST_SUCCESS:
       return {
         ...state,
@@ -55,6 +66,8 @@ const PostReducer = (state = INIT_STATE, action) => {
     case constants.DELETE_POST_FAILURE:
     case constants.RESTORE_POST_FAILURE:
     case constants.LIKE_POST_FAILURE:
+    case constants.GET_SINGLE_POST_FAILURE:
+    case constants.SEARCH_POST_FAILURE:
       return {
         ...state,
         isFetching: false

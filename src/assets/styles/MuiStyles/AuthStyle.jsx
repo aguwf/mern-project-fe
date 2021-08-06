@@ -6,15 +6,16 @@ export default makeStyles((theme) => ({
       margin: theme.spacing(1)
     }
   },
-  paper: {
+  paperAuth: {
     marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     padding: theme.spacing(2),
-    borderRadius: '10px'
-    // transform: 'translateX(110%)',
-    // width: '30%'
+    borderRadius: '10px',
+    [theme.breakpoints.up('xs')]: {
+      marginTop: theme.spacing(3)
+    }
   },
   avatar: {
     margin: theme.spacing(1),

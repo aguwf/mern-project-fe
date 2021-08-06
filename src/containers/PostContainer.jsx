@@ -8,6 +8,7 @@ import { Container, Grow, Grid, Paper } from '@material-ui/core'
 import * as actions from '../actions/PostAction'
 import { logout } from '../actions/AuthAction'
 import useStyles from '../assets/styles/MuiStyles/PostContainStyle'
+import loading from '../assets/images/loading-meo.gif'
 
 export const PostContainer = (props) => {
   const classes = useStyles()
@@ -16,40 +17,57 @@ export const PostContainer = (props) => {
     setPostData(data)
   }
   const clearPost = () => {
-    console.log(111)
     setPostData(null)
   }
   useEffect(() => {
-    !props.listPost && props.getPostRequest({ pageIndex: 1 })
-  }, [props])
+    !props.listPost &&
+      !props.textSearch &&
+      props.getPostRequest({ pageIndex: 1 })
+  }, [])
   return (
     <Container maxWidth={false} className={classes.mainContainer}>
       <NavBar
-        getDeletedPostRequest={props.getDeletedPostRequest}
+        getDeletedPostRequest={() => props.getDeletedPostRequest()}
         listDeletedPost={props.listDeletedPost}
         restorePostRequest={(data) => props.restorePostRequest(data)}
         logout={() => props.logout()}
+        searchPostRequest={(data) => props.searchPostRequest(data)}
+        getPostRequest={(data) => props.getPostRequest(data)}
       />
-      <Grow in className={classes.actionDiv}>
+      <Grow in>
         <Container maxWidth={false}>
           <Grid
+            className={classes.actionDiv}
             container
             justifyContent='space-between'
             alignItems='stretch'
             spacing={4}
           >
-            <Grid item xs={12} sm={7} className={classes.maxWidth}>
-              <Post
-                listPost={props.listPost}
-                totalPage={props.totalPage}
-                pageIndex={props.pageIndex}
-                textSearch={props.textSearch}
-                onPostUpdate={onPostUpdate}
-                deletePostRequest={(data) => props.deletePostRequest(data)}
-                likePostRequest={(data) => props.likePostRequest(data)}
-                clearPost={clearPost}
+            {props.isFetching ? (
+              <img
+                src={loading}
+                alt={'meooooooooooo'}
+                width={'70%'}
+                height={'70%'}
               />
-            </Grid>
+            ) : (
+              <Grid item xs={12} sm={7} className={classes.maxWidth}>
+                <Post
+                  listPost={props.listPost}
+                  totalPage={props.totalPage}
+                  pageIndex={props.pageIndex}
+                  textSearch={props.textSearch}
+                  onPostUpdate={onPostUpdate}
+                  deletePostRequest={(data) => props.deletePostRequest(data)}
+                  likePostRequest={(data) => props.likePostRequest(data)}
+                  clearPost={clearPost}
+                  searchPostRequest={(data) => props.searchPostRequest(data)}
+                  getSinglePostRequest={(data) =>
+                    props.getSinglePostRequest(data)
+                  }
+                />
+              </Grid>
+            )}
             <Grid className={`${classes.formRoot} ${classes.sticky}`}>
               <Grid
                 item
@@ -68,7 +86,12 @@ export const PostContainer = (props) => {
                   className={`${classes.pagination} ${classes.marginTop}`}
                   elevation={6}
                 >
-                  <Pagination />
+                  <Pagination
+                    totalPage={props.totalPage}
+                    textSearch={props.textSearch}
+                    getPostRequest={(data) => props.getPostRequest(data)}
+                    searchPostRequest={(data) => props.searchPostRequest(data)}
+                  />
                 </Paper>
               </Grid>
             </Grid>
@@ -81,6 +104,7 @@ export const PostContainer = (props) => {
 
 const mapStateToProps = (state) => {
   return {
+    isFetching: state.posts.isFetching,
     listPost: state.posts.listPost,
     listDeletedPost: state.posts.listDeletedPost,
     pageIndex: state.posts.pageIndex,
@@ -99,7 +123,10 @@ const mapDispatchToProps = (dispatch) => {
     deletePostRequest: (data) => dispatch(actions.deletePostRequest(data)),
     restorePostRequest: (data) => dispatch(actions.restorePostRequest(data)),
     likePostRequest: (data) => dispatch(actions.likePostRequest(data)),
-    logout: () => dispatch(logout())
+    logout: () => dispatch(logout()),
+    getSinglePostRequest: (data) =>
+      dispatch(actions.getSinglePostRequest(data)),
+    searchPostRequest: (data) => dispatch(actions.searchPostRequest(data))
   }
 }
 

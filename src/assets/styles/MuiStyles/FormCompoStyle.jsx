@@ -11,7 +11,10 @@ export default makeStyles((theme) => ({
     boxShadow: '2px 2px 6px #a2a2a2',
     borderRadius: 10,
     position: 'sticky',
-    top: '5%'
+    top: '5%',
+    [theme.breakpoints.up('xs')]: {
+      position: 'relative'
+    }
   },
   form: {
     display: 'flex',

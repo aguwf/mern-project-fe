@@ -10,7 +10,12 @@ export default makeStyles((theme) => ({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '10px 0',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
+    [theme.breakpoints.up('xs')]: {
+      flexDirection: 'column',
+      margin: '11px 0',
+      padding: 0
+    }
   },
   popover: {
     marginTop: '30px'
@@ -37,7 +42,15 @@ export default makeStyles((theme) => ({
     textDecoration: 'none',
     fontSize: 30,
     fontWeight: 700,
-    paddingLeft: '3rem'
+    paddingLeft: '3rem',
+    [theme.breakpoints.up('xs')]: {
+      paddingLeft: 0
+    }
+  },
+  title: {
+    [theme.breakpoints.up('xs')]: {
+      margin: '1rem'
+    }
   },
   image: {
     marginLeft: '15px'
@@ -53,6 +66,14 @@ export default makeStyles((theme) => ({
     '&:hover': {
       border: '1px solid #ffc9c9',
       backgroundColor: '#ffc9c9'
+    },
+    [theme.breakpoints.up('xs')]: {
+      borderRadius: 6
+    }
+  },
+  trashBtn: {
+    [theme.breakpoints.up('xs')]: {
+      padding: '4px 20px'
     }
   },
   inputRoot: {
@@ -66,9 +87,9 @@ export default makeStyles((theme) => ({
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create('width'),
-    width: '50ch !important',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch'
+    width: '50ch',
+    [theme.breakpoints.up('xs')]: {
+      width: '100%'
     }
   },
   search: {
@@ -80,9 +101,8 @@ export default makeStyles((theme) => ({
     },
     marginLeft: '50px !important',
     width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(1),
-      width: 'auto'
+    [theme.breakpoints.up('xs')]: {
+      width: '90%'
     }
   },
   searchIcon: {
@@ -103,7 +123,10 @@ export default makeStyles((theme) => ({
   },
   toolbar: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    [theme.breakpoints.up('xs')]: {
+      margin: '1rem 0'
+    }
   },
   profile: {
     display: 'flex',
@@ -112,13 +135,26 @@ export default makeStyles((theme) => ({
   purple: {
     color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: deepPurple[500],
-    marginRight: '20px'
+    marginRight: '20px',
+    [theme.breakpoints.up('xs')]: {
+      width: '30px',
+      height: '30px',
+      marginRight: '10px'
+    }
   },
-  userName: {
+  UserName: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    [theme.breakpoints.up('xs')]: {
+      fontSize: '0.8rem'
+      // width: '4rem'
+    }
   },
   logout: {
-    marginLeft: '20px'
+    marginLeft: '20px',
+    [theme.breakpoints.up('xs')]: {
+      marginLeft: '10px',
+      fontSize: '0.65rem'
+    }
   }
 }))

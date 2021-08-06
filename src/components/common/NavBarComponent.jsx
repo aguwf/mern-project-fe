@@ -16,6 +16,8 @@ import RestoreIcon from '@material-ui/icons/Restore'
 import SearchIcon from '@material-ui/icons/Search'
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import decode from 'jwt-decode'
+import { firebaseApp } from '../auth/base'
+import firebase from 'firebase'
 
 function NavBarComponent(props) {
   let renderDelPost = []
@@ -25,6 +27,7 @@ function NavBarComponent(props) {
   const [HideTrash, setHideTrash] = React.useState(true)
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [User, setUser] = React.useState(null)
+  const [textSearch, setTextSearch] = React.useState('')
 
   React.useEffect(() => {
     const token = User?.token
@@ -55,10 +58,27 @@ function NavBarComponent(props) {
     setAnchorEl(null)
   }
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await firebaseApp?.auth()?.signOut()
+    // await firebase.auth().signOut()
     props.logout()
     history.push('/')
     setUser(null)
+  }
+
+  const handleChangeSearch = (event) => {
+    const { value } = event.target
+    console.log(value)
+    if (!value) {
+      props.getPostRequest({ pageIndex: 1 })
+    }
+    setTextSearch(value)
+  }
+
+  const handleSearch = (event) => {
+    if (event.key === 'Enter') {
+      props.searchPostRequest({ textSearch, pageIndex: 1 })
+    }
   }
 
   const open = Boolean(anchorEl)
@@ -85,7 +105,7 @@ function NavBarComponent(props) {
   return (
     <div style={{ display: 'flex', alignItems: 'center' }}>
       <AppBar className={classes.appBar} position='static' color='inherit'>
-        <Box>
+        <Box className={classes.title}>
           <Typography
             component={Link}
             to={'/'}
@@ -106,6 +126,9 @@ function NavBarComponent(props) {
               root: classes.inputRoot,
               input: classes.inputInput
             }}
+            // value={textSearch}
+            onChange={handleChangeSearch}
+            onKeyPress={handleSearch}
           />
         </div>
         <Toolbar className={classes.toolbar}>
@@ -118,7 +141,7 @@ function NavBarComponent(props) {
               >
                 {User.result.name.charAt(0)}
               </Avatar>
-              <Typography className={classes.UserName} variant='h6'>
+              <Typography variant='h6' className={classes.UserName}>
                 {User.result.name}
               </Typography>
               <Button
@@ -155,7 +178,11 @@ function NavBarComponent(props) {
           )}
           {User?.result?.name && (
             <Box className={`${classes.trash} ${classes.marginLeft}`}>
-              <IconButton onClick={handleClick} color='secondary'>
+              <IconButton
+                onClick={handleClick}
+                color='secondary'
+                className={classes.trashBtn}
+              >
                 <RestoreFromTrashIcon />
               </IconButton>
             </Box>

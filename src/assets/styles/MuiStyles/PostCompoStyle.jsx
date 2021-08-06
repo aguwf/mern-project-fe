@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles'
 
-export default makeStyles({
+export default makeStyles((theme) => ({
   media: {
     height: '5rem',
     paddingTop: '56.25%',
@@ -22,7 +22,12 @@ export default makeStyles({
     height: '100%',
     minHeight: '300px',
     margin: '21px 26px',
-    position: 'relative'
+    position: 'relative',
+    [theme.breakpoints.up('xs')]: {
+      width: '100%',
+      margin: 0,
+      marginBottom: '25px'
+    }
   },
   content: {
     overflowY: 'scroll',
@@ -81,5 +86,9 @@ export default makeStyles({
     '&:hover': {
       backgroundColor: '#f7cad0'
     }
+  },
+  cardButton: {
+    display: 'block',
+    textAlign: 'initial'
   }
-})
+}))

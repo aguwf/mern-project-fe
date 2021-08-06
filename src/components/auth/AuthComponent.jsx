@@ -7,7 +7,7 @@ import {
   Typography,
   Container
 } from '@material-ui/core'
-import { GoogleLogin, GoogleLogout } from 'react-google-login'
+import { GoogleLogin } from 'react-google-login'
 import LockOutlineIcon from '@material-ui/icons/LockOutlined'
 import useStyles from '../../assets/styles/MuiStyles/AuthStyle'
 import { useHistory } from 'react-router-dom'
@@ -85,13 +85,9 @@ function AuthComponent(props) {
     firebaseApp.auth().signInWithPopup(authProvider).then(authHandler)
   }
 
-  const logout = async () => {
-    await firebase.auth().signOut()
-  }
-
   return (
-    <Container component='main' maxWidth='xs'>
-      <Paper className={classes.paper} elevation={3}>
+    <Container component='main' maxWidth='xs' className={classes.rootAuth}>
+      <Paper className={classes.paperAuth} elevation={3}>
         <Avatar className={classes.avatar}>
           <LockOutlineIcon />
         </Avatar>
@@ -179,19 +175,6 @@ function AuthComponent(props) {
             onClick={() => authenticate('Facebook')}
           >
             Login with Facebook
-          </Button>
-          <Button
-            type='Submit'
-            fullWidth
-            variant='contained'
-            color='primary'
-            className={classes.googleButton}
-            style={{
-              backgroundColor: '#2B2B2B'
-            }}
-            onClick={() => authenticate('Github')}
-          >
-            Login with Github
           </Button>
           <Grid container justifyContent='flex-end'>
             <Grid item>

@@ -29,6 +29,14 @@ const likePostRequest = createAction(constants.LIKE_POST_REQUEST)
 const likePostSuccess = createAction(constants.LIKE_POST_SUCCESS)
 const likePostFailure = createAction(constants.LIKE_POST_FAILURE)
 
+const getSinglePostRequest = createAction(constants.GET_SINGLE_POST_REQUEST)
+const getSinglePostSuccess = createAction(constants.GET_SINGLE_POST_SUCCESS)
+const getSinglePostFailure = createAction(constants.GET_SINGLE_POST_FAILURE)
+
+const searchPostRequest = createAction(constants.SEARCH_POST_REQUEST)
+const searchPostSuccess = createAction(constants.SEARCH_POST_SUCCESS)
+const searchPostFailure = createAction(constants.SEARCH_POST_FAILURE)
+
 export {
   getPostRequest,
   getPostFailure,
@@ -50,5 +58,11 @@ export {
   restorePostFailure,
   likePostRequest,
   likePostSuccess,
-  likePostFailure
+  likePostFailure,
+  getSinglePostRequest,
+  getSinglePostSuccess,
+  getSinglePostFailure,
+  searchPostRequest,
+  searchPostSuccess,
+  searchPostFailure
 }

@@ -9,7 +9,8 @@ import {
   CardActions,
   Box,
   Popover,
-  Button
+  Button,
+  ButtonBase
 } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
 import FavoriteIcon from '@material-ui/icons/Favorite'
@@ -18,6 +19,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import ShareIcon from '@material-ui/icons/Share'
 import useStyles from '../../assets/styles/MuiStyles/PostCompoStyle'
 import moment from 'moment'
+import { useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import {
   FacebookShareButton,
@@ -32,6 +34,7 @@ import {
 
 function PostComponent(props) {
   const classes = useStyles()
+  const history = useHistory()
   let renderPost = []
   const User = JSON.parse(localStorage.getItem('profile'))
 
@@ -68,6 +71,14 @@ function PostComponent(props) {
 
   const handleClose = () => {
     setAnchorEl(null)
+  }
+
+  const handleGetPost = (id) => {
+    props.getSinglePostRequest({ id, history })
+  }
+
+  const handleSearchTag = (tag) => {
+    props.searchPostRequest({ tag, pageIndex: 1 })
   }
 
   const open = Boolean(anchorEl)
@@ -109,33 +120,40 @@ function PostComponent(props) {
       }
       return (
         <Card key={index} className={classes.card}>
-          <CardHeader
-            className={classes.overlay2}
-            action={
-              (User?.result?.googleId === post?.creator ||
-                User?.result?._id === post?.creator) && (
-                <IconButton
-                  aria-label='settings'
-                  onClick={() => handleUpdate(post)}
-                  style={{ color: 'white' }}
-                  size={'small'}
-                >
-                  <EditIcon />
-                </IconButton>
-              )
-            }
-          />
-          <div className={classes.overlay}>
-            <div style={{ width: '16rem' }}>
-              <Typography variant={'h5'} style={{ width: '80%' }}>
-                {post.title}
+          <ButtonBase
+            component='span'
+            className={classes.cardButton}
+            onClick={() => handleGetPost(post.id)}
+          >
+            <CardHeader
+              className={classes.overlay2}
+              action={
+                (User?.result?.googleId === post?.creator ||
+                  User?.result?._id === post?.creator) && (
+                  <IconButton
+                    aria-label='settings'
+                    onClick={() => handleUpdate(post)}
+                    style={{ color: 'white' }}
+                    size={'small'}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                )
+              }
+            />
+            <div className={classes.overlay}>
+              <div style={{ width: '16rem' }}>
+                <Typography variant={'h5'} style={{ width: '80%' }}>
+                  {post.title}
+                </Typography>
+              </div>
+              <Typography variant={'body2'}>
+                {moment(post.createAt).fromNow()}
               </Typography>
             </div>
-            <Typography variant={'body2'}>
-              {moment(post.createAt).fromNow()}
-            </Typography>
-          </div>
-          <CardMedia className={classes.media} image={post.selectedFile} />
+            <CardMedia className={classes.media} image={post.selectedFile} />
+          </ButtonBase>
+
           <Typography
             className={classes.details}
             variant='body2'
@@ -149,33 +167,39 @@ function PostComponent(props) {
                 style={{
                   cursor: 'pointer'
                 }}
-                onClick={() => {
-                  console.log(tag)
-                }}
+                onClick={() => handleSearchTag(tag)}
               >
                 #{tag}
               </span>
             ))}
           </Typography>
-          <CardContent className={classes.content}>
-            <Typography
-              className={classes.title}
-              variant='body2'
-              color='textSecondary'
-              component='p'
-              gutterBottom
-            >
-              {post.message}
-            </Typography>
-            <Typography
-              className={classes.title}
-              variant='body2'
-              color='textSecondary'
-              component='p'
-            >
-              Người đăng : {post.name}
-            </Typography>
-          </CardContent>
+
+          <ButtonBase
+            component='span'
+            className={classes.cardButton}
+            onClick={() => handleGetPost(post.id)}
+          >
+            <CardContent className={classes.content}>
+              <Typography
+                className={classes.title}
+                variant='body2'
+                color='textSecondary'
+                component='p'
+                gutterBottom
+              >
+                {post.message}
+              </Typography>
+              <Typography
+                className={classes.title}
+                variant='body2'
+                color='textSecondary'
+                component='p'
+              >
+                Người đăng : {post.name}
+              </Typography>
+            </CardContent>
+          </ButtonBase>
+
           <CardActions disableSpacing className={classes.cardActions}>
             <div className={classes.likeTxt}>
               <Button
@@ -187,9 +211,11 @@ function PostComponent(props) {
                 <Likes />
               </Button>
             </div>
+
             <IconButton aria-label='share' onClick={handleClick}>
               <ShareIcon />
             </IconButton>
+
             {(User?.result?.googleId === post?.creator ||
               User?.result?._id === post?.creator) && (
               <IconButton
@@ -201,6 +227,7 @@ function PostComponent(props) {
               </IconButton>
             )}
           </CardActions>
+
           <Popover
             className={classes.popover}
             open={open}
@@ -243,6 +270,7 @@ function PostComponent(props) {
                   Share to facebook
                 </FacebookShareButton>
               </Box>
+
               <Box justifyContent='center' alignItems='center'>
                 <FacebookMessengerShareButton
                   style={{
@@ -262,6 +290,7 @@ function PostComponent(props) {
                   Share to messenger
                 </FacebookMessengerShareButton>
               </Box>
+
               <Box justifyContent='center' alignItems='center'>
                 <TwitterShareButton
                   style={{
@@ -281,6 +310,7 @@ function PostComponent(props) {
                   Share to twitter
                 </TwitterShareButton>
               </Box>
+
               <Box justifyContent='center' alignItems='center'>
                 <TelegramShareButton
                   style={{

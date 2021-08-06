@@ -116,6 +116,56 @@ function* handleLikePost(action) {
   }
 }
 
+function* handleGetSinglePost(action) {
+  try {
+    console.log(action)
+    const objFetch = {
+      url: constants.DOMAIN + `/api/posts/${action.payload.id}`
+    }
+    const response = yield API.getPost(objFetch)
+    yield put(actions.getSinglePostSuccess({ response }))
+    action.payload.history.push(`posts/${action.payload.id}`)
+  } catch (error) {
+    yield put(actions.getSinglePostFailure(error))
+  }
+}
+
+function* handleSearchPost(action) {
+  try {
+    const objFetch = {
+      url:
+        constants.DOMAIN +
+        `/api/posts/search?q=${action.payload?.textSearch || 'none'}&tags=${
+          action.payload?.tag || ''
+        }&_page=${action.payload.pageIndex}&_limit=${constants.LIMIT}`
+    }
+    const response = yield API.getPost(objFetch)
+    yield put(
+      actions.searchPostSuccess({
+        response,
+        textSearch: action.payload.textSearch,
+        pageIndex: action.payload.pageIndex
+      })
+    )
+  } catch (error) {
+    yield put(actions.searchPostFailure({ error }))
+  }
+}
+
+function* handleSearchTag(action) {
+  try {
+    const objFetch = {
+      url:
+        constants.DOMAIN +
+        `/api/posts/search?tags=${action.payload.textSearch}&_page=${action.payload.pageIndex}&_limit=${constants.LIMIT}`
+    }
+    const response = yield API.getPost(objFetch)
+    yield put(actions.searchPostSuccess({ response }))
+  } catch (error) {
+    yield put(actions.searchPostFailure({ error }))
+  }
+}
+
 export const PostSaga = [
   takeEvery(constants.GET_POST_REQUEST, handleGetPost),
   takeEvery(constants.GET_DELETED_POST_REQUEST, handleGetDeletedPost),
@@ -123,5 +173,7 @@ export const PostSaga = [
   takeEvery(constants.UPDATE_POST_REQUEST, handleUpdatePost),
   takeEvery(constants.DELETE_POST_REQUEST, handleDeletePost),
   takeEvery(constants.RESTORE_POST_REQUEST, handleRestorePost),
-  takeEvery(constants.LIKE_POST_REQUEST, handleLikePost)
+  takeEvery(constants.LIKE_POST_REQUEST, handleLikePost),
+  takeEvery(constants.GET_SINGLE_POST_REQUEST, handleGetSinglePost),
+  takeEvery(constants.SEARCH_POST_REQUEST, handleSearchPost)
 ]
