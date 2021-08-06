@@ -6,5 +6,5 @@ import DetailPostReducer from './DetailPostReducer'
 export default combineReducers({
   posts: PostReducer,
   auth: AuthReducer,
-  post: DetailPostReducer
+  detailPost: DetailPostReducer
 })

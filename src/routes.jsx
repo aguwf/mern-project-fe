@@ -21,9 +21,9 @@ const Routes = () => {
               component={!User ? Page.AuthPage : () => <Redirect to={'/'} />}
             />
             <Route path='/' exact component={() => <Redirect to={'posts'} />} />
+            <Route exact path='/posts/:id' component={Page.DetailPost} />
             <Route path='/posts' exact component={Page.HomePage} />
             <Route path='/posts/search' exact component={Page.HomePage} />
-            <Route path='/posts/:id' exact component={Page.PostDetail} />
           </Switch>
         </Container>
       </Suspense>

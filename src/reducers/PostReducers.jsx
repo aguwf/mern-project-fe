@@ -20,7 +20,6 @@ const PostReducer = (state = INIT_STATE, action) => {
     case constants.DELETE_POST_REQUEST:
     case constants.RESTORE_POST_REQUEST:
     case constants.LIKE_POST_REQUEST:
-    case constants.GET_SINGLE_POST_REQUEST:
     case constants.SEARCH_POST_REQUEST:
       return {
         ...state,
@@ -66,7 +65,6 @@ const PostReducer = (state = INIT_STATE, action) => {
     case constants.DELETE_POST_FAILURE:
     case constants.RESTORE_POST_FAILURE:
     case constants.LIKE_POST_FAILURE:
-    case constants.GET_SINGLE_POST_FAILURE:
     case constants.SEARCH_POST_FAILURE:
       return {
         ...state,

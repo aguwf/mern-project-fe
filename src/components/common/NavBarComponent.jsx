@@ -17,7 +17,6 @@ import SearchIcon from '@material-ui/icons/Search'
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import decode from 'jwt-decode'
 import { firebaseApp } from '../auth/base'
-import firebase from 'firebase'
 
 function NavBarComponent(props) {
   let renderDelPost = []
@@ -76,6 +75,7 @@ function NavBarComponent(props) {
   }
 
   const handleSearch = (event) => {
+    console.log(event.key)
     if (event.key === 'Enter') {
       props.searchPostRequest({ textSearch, pageIndex: 1 })
     }
