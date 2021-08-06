@@ -12,7 +12,7 @@ export default makeStyles((theme) => ({
     borderRadius: 10,
     position: 'sticky',
     top: '5%',
-    [theme.breakpoints.up('xs')]: {
+    [theme.breakpoints.down('md')]: {
       position: 'relative'
     }
   },

@@ -11,7 +11,7 @@ export default makeStyles((theme) => ({
     alignItems: 'center',
     padding: '10px 0',
     textTransform: 'uppercase',
-    [theme.breakpoints.up('xs')]: {
+    [theme.breakpoints.down('md')]: {
       flexDirection: 'column',
       margin: '11px 0',
       padding: 0
@@ -43,12 +43,12 @@ export default makeStyles((theme) => ({
     fontSize: 30,
     fontWeight: 700,
     paddingLeft: '3rem',
-    [theme.breakpoints.up('xs')]: {
+    [theme.breakpoints.down('md')]: {
       paddingLeft: 0
     }
   },
   title: {
-    [theme.breakpoints.up('xs')]: {
+    [theme.breakpoints.down('md')]: {
       margin: '1rem'
     }
   },
@@ -67,17 +67,20 @@ export default makeStyles((theme) => ({
       border: '1px solid #ffc9c9',
       backgroundColor: '#ffc9c9'
     },
-    [theme.breakpoints.up('xs')]: {
+    [theme.breakpoints.down('md')]: {
       borderRadius: 6
     }
   },
   trashBtn: {
-    [theme.breakpoints.up('xs')]: {
+    [theme.breakpoints.down('md')]: {
       padding: '4px 20px'
     }
   },
   inputRoot: {
-    color: 'inherit'
+    color: 'inherit',
+    [theme.breakpoints.down('md')]: {
+      width: '100%'
+    }
   },
   inputInput: {
     border: '1px solid #c3c3c3',
@@ -88,7 +91,7 @@ export default makeStyles((theme) => ({
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create('width'),
     width: '50ch',
-    [theme.breakpoints.up('xs')]: {
+    [theme.breakpoints.down('md')]: {
       width: '100%'
     }
   },
@@ -100,9 +103,10 @@ export default makeStyles((theme) => ({
       backgroundColor: alpha(theme.palette.common.white, 0.25)
     },
     marginLeft: '50px !important',
-    width: '100%',
-    [theme.breakpoints.up('xs')]: {
-      width: '90%'
+    width: '35%',
+    [theme.breakpoints.down('md')]: {
+      width: '90%',
+      marginLeft: '0 !important'
     }
   },
   searchIcon: {
@@ -124,8 +128,12 @@ export default makeStyles((theme) => ({
   toolbar: {
     display: 'flex',
     alignItems: 'center',
-    [theme.breakpoints.up('xs')]: {
-      margin: '1rem 0'
+    width: '27%',
+    justifyContent: 'flex-end',
+    [theme.breakpoints.down('md')]: {
+      margin: '1rem 0',
+      width: '100%',
+      justifyContent: 'center'
     }
   },
   profile: {
@@ -136,7 +144,7 @@ export default makeStyles((theme) => ({
     color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: deepPurple[500],
     marginRight: '20px',
-    [theme.breakpoints.up('xs')]: {
+    [theme.breakpoints.down('md')]: {
       width: '30px',
       height: '30px',
       marginRight: '10px'
@@ -145,14 +153,14 @@ export default makeStyles((theme) => ({
   UserName: {
     display: 'flex',
     alignItems: 'center',
-    [theme.breakpoints.up('xs')]: {
+    [theme.breakpoints.down('md')]: {
       fontSize: '0.8rem'
       // width: '4rem'
     }
   },
   logout: {
     marginLeft: '20px',
-    [theme.breakpoints.up('xs')]: {
+    [theme.breakpoints.down('md')]: {
       marginLeft: '10px',
       fontSize: '0.65rem'
     }

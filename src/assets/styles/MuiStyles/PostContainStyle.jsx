@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 export default makeStyles((theme) => ({
   mainContainer: {
     position: 'relative',
-    [theme.breakpoints.up('xs')]: {
+    [theme.breakpoints.down('md')]: {
       padding: 0
     }
   },
@@ -11,14 +11,14 @@ export default makeStyles((theme) => ({
     margin: theme.spacing(1)
   },
   actionDiv: {
-    [theme.breakpoints.up('xs')]: {
+    [theme.breakpoints.down('md')]: {
       flexDirection: 'column-reverse'
     }
   },
   maxWidth: {
     maxWidth: '79.333333%',
     flexBasis: '100%',
-    [theme.breakpoints.up('xs')]: {
+    [theme.breakpoints.down('md')]: {
       maxWidth: '100%',
       flexBasis: '100%'
     }
@@ -26,7 +26,7 @@ export default makeStyles((theme) => ({
   sticky: {
     position: 'sticky',
     top: '5%',
-    [theme.breakpoints.up('xs')]: {
+    [theme.breakpoints.down('md')]: {
       position: 'relative'
     }
   },
@@ -38,9 +38,8 @@ export default makeStyles((theme) => ({
   },
   formRoot: {
     width: '19.666666%',
-    [theme.breakpoints.up('xs')]: {
+    [theme.breakpoints.down('md')]: {
       width: '100%'
-      // height: '285px'
     }
   },
   form: {

@@ -13,7 +13,7 @@ export default makeStyles((theme) => ({
     alignItems: 'center',
     padding: theme.spacing(2),
     borderRadius: '10px',
-    [theme.breakpoints.up('xs')]: {
+    [theme.breakpoints.down('md')]: {
       marginTop: theme.spacing(3)
     }
   },

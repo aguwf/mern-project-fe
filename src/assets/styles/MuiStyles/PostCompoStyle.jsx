@@ -23,7 +23,7 @@ export default makeStyles((theme) => ({
     minHeight: '300px',
     margin: '21px 26px',
     position: 'relative',
-    [theme.breakpoints.up('xs')]: {
+    [theme.breakpoints.down('md')]: {
       width: '100%',
       margin: 0,
       marginBottom: '25px'
