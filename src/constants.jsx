@@ -1,5 +1,5 @@
 // export const DOMAIN = 'http://192.168.0.103:3010'
-export const DOMAIN = 'https://nodejs-memory-mern.herokuapp.com'
+export const DOMAIN = 'https://mern-project-be.vercel.app/'
 
 export const LIMIT = 3
 
